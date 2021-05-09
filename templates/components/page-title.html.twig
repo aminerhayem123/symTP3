@@ -1,0 +1,19 @@
+<h1 style="text-align: center; margin-top: 1rem;">
+	{% if content %}
+		{{ content }}
+	{% else %}
+		{% if show %}
+			Voir
+		{% elseif edit %}
+			Modifier
+		{% else %}
+			Ajouter
+		{% endif %}
+
+		{% if agence %}
+			Agence
+		{% else %}
+			Voiture
+		{% endif %}
+	{% endif %}
+</h1>

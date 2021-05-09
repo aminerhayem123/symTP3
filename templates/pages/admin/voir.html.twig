@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if agence %}
+		Voir Agence
+	{% else %}
+		Voir Voiture
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	{# ========== Page Title Component ========== #}
+	{% 
+		include 'components/page-title.html.twig' 
+		with {
+			'content': false,
+			'show': false,
+			'edit': true,
+			agence,
+			voiture 
+		} 
+	%}
+	{# ========================================== #}
+
+	{# ========== Content ========== #}
+		{% if agence %}
+			<h1>
+		{{ agence.nom }}
+		</h1>
+			<p>
+		{{ agence.telAgence }}
+		</p>
+			<p>
+		{{ agence.addressVille }}
+		</p>
+		<hr>
+	{% else %}
+		<h1>{{ voiture.marque }}</h1>
+		<p>{{ voiture.coleur }}</p>
+		<p>{{ voiture.description }}</p>
+		<p>{{ voiture.nombreDePlace }}</p>
+		<p>{{ voiture.nomAgence }}</p>
+	{% endif %}
+	<a href="/">Go Back</a>
+	{# ============================= #}
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Admin - agences et voitures
+{% endblock %}
+
+{% block body %}
+	{# ========== Page Title Component ========== #}
+	{% 
+		include 'components/page-title.html.twig' 
+		with {
+			'content': 'agences et voitures'
+		}
+	%}
+	{# ========================================== #}
+
+	{# ========== Agences Card ========== #}
+		<div class="card" style="margin-top: 5rem;"> <div class="card-header">
+			<h1>
+				Agences &nbsp;&nbsp;
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="/agence/ajouter" class="btn btn-primary" style="padding-left: 3.5rem; padding-right: 3.5rem;">Ajouter</a>
+				{% endif %}
+			</h1>
+		</div>
+		<div class="card-body">
+			{% if not agences %}
+				<h1>
+					Il n'y avait pas des agences !
+				</h1>
+			{% else %}
+				<table class="table table-secondary table-striped table-hover" table-bordered">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nom</th>
+							<th>Telagence</th>
+							<th>Address Ville</th>
+							{% if is_granted('ROLE_ADMIN') %}
+								<th>Actions</th>
+							{% endif %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for agence in agences %}
+							<tr>
+								<td>{{ agence.id }}</td>
+								<td>{{ agence.nom }}</td>
+								<td>{{ agence.telAgence }}</td>
+								<td>{{ agence.addressVille }}</td>
+								{% if is_granted('ROLE_ADMIN') %}
+									<td>
+										<a href="/agence/consulter/{{ agence.id }}" class="btn btn-success">SHOW</a>
+										&nbsp;
+										<a href="/agence/modifier/{{ agence.id }}" class="btn btn-warning">Edits</a>
+										&nbsp;
+										{# used with get method	#}
+										{# <a href="/agence/supprimer/{{ agence.id }}" class="btn btn-danger">DELETE</a> #}
+											<a id='agence-delete-btn' data-id={{ agence.id }} class="btn btn-danger"> DELETE</a>
+									</td>
+								{% endif %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+	</div>
+	{# ================================= #}
+	<hr/>
+	{# ========== Voitures Card ========== #}
+	<div class="card" style="margin-top: 5rem;">
+		<div class="card-header">
+			<h1>
+				Voitures &nbsp;&nbsp;
+				<a href="/voiture/ajouter" class="btn btn-primary" style="padding-left: 3.5rem; padding-right: 3.5rem;">Ajouter</a>
+			</h1>
+		</div>
+		<div class="card-body">
+			{% if not voitures %}
+				<h1>
+					Il n'y avait pas des voitures !
+				</h1>
+			{% else %}
+				<table class="table table-secondary table-striped table-hover" table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Marque</th>
+							<th>Coleur</th>
+							<th>Description</th>
+							<th>Nombre de place</th>
+							<th>Nom Agence</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for voiture in voitures %}
+							<tr>
+								<td>{{ loop.index }}</td>
+								<td>{{ voiture.marque }}</td>
+								<td>{{ voiture.coleur }}</td>
+								<td>{{ voiture.description }}</td>
+								<td>{{ voiture.nombreDePlace }}</td>
+								<td>{{ voiture.agence.nom }}</td>
+								<td>
+								    <a href="/voiture/consulter/{{ voiture.id }}" class="btn btn-success">SHOW</a>
+									<a href="/voiture/modifier/{{ voiture.id }}" class="btn btn-warning">Edits</a>
+									&nbsp;&nbsp;
+									{# used with get method	#}
+									{# <a href="/voiture/supprimer/{{ voiture.id }}" class="btn btn-danger">DELETE</a> #}
+										<a id='voiture-delete-btn' data-id={{voiture.id}} class="btn btn-danger"> DELETE</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+	</div>
+	{# =================================== #}
+	<hr/>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/scripts/main.js"></script>
+{% endblock %}

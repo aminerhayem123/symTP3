@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if agence %}
+		Ajouter Agence
+	{% else %}
+		Ajouter Voiture
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	{# ========== Page Title Component ========== #}
+	{% 
+		include 'components/page-title.html.twig' 
+		with {
+			'content': false,
+			'show': false,
+			'edit': false,
+			agence,
+			voiture 
+		} 
+	%}
+	{# ========================================== #}
+	{# ========== Forms Component ========== #}
+{% 	
+		include 'components/forms.html.twig' 
+		with { 
+			form
+		} 
+	%}
+	{# =============================== #}
+{% endblock %}
